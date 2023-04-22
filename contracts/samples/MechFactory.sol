@@ -16,8 +16,8 @@ contract MechFactory {
     ERC721Mech public immutable mech721implementation;
 
 
-    constructor(IEntryPoint _entryPoint) {
-        mech721implementation = new ERC721Mech(_entryPoint,0);
+    constructor(IEntryPoint _entryPoint, _tokenId) {
+        mech721implementation = new ERC721Mech(_entryPoint,_tokenId);
     }
 
     /**
@@ -34,7 +34,7 @@ contract MechFactory {
         }
         ret = ERC721Mech((new ERC1967Proxy{salt : bytes32(salt)}(
                 address(mech721implementation),
-                abi.encodeCall(ERC721Mech.initialize, (owner))
+                abi.encodeCall(new ERC721Mech, (token, id))
             )));
     }
 
